@@ -1,0 +1,37 @@
+services:
+  app:
+    build: .
+    container_name: sunflower-sms
+    ports:
+      - "4000:80"  # Прокидываем порт 80 веб-сервера на локальный 4000
+    networks:
+      - app-network
+    depends_on:
+      - db
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=secret
+      - MYSQL_DATABASE=sfdb
+
+  db:
+    image: mysql:lts
+    container_name: sunflower-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: sfdb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: secret
+    command: --sql-mode="" --log-bin-trust-function-creators=1
+    volumes:
+      - sunflower_data:/var/lib/mysql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  sunflower_data:
