@@ -1,7 +1,9 @@
+name: sunflower-sms
+
 services:
   app:
     build: .
-    container_name: sunflower-sms
+    container_name: application
     ports:
       - "4000:80"  # Прокидываем порт 80 веб-сервера на локальный 4000
     networks:
@@ -13,10 +15,12 @@ services:
       - MYSQL_USER=user
       - MYSQL_PASSWORD=secret
       - MYSQL_DATABASE=sfdb
+    volumes:
+      - ./config/Data.php:/var/www/html/Data.php
 
   db:
     image: mysql:lts
-    container_name: sunflower-db
+    container_name: database
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
