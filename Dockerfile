@@ -12,5 +12,3 @@ RUN a2enmod rewrite
 # Клонируем проект из git-репозитория
 RUN git clone https://github.com/sunflower-sms/openSIS-Classic /var/www/html/ \
     && chown -R www-data:www-data /var/www/html/
-
-# Устанавливаем права на директорию
